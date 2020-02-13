@@ -1,9 +1,11 @@
 # A docker container made to act as a Dyndns Client updater, powered Inadyn. Made for a simple deploy
 
 ## Environment variables for quick start
+* All variables will be ignored if you already have your `inadyn.conf` configuration file in place. The init script won't ever replace/override your `inadyn.conf`.
 * `USERNAME`
 * `PASSWORD`
 * `SYSTEM` defaults to `default@dyndns.org`
+* `ALIAS` should be your DynDNS Hostname (`testdomain.info`, for example)
 
 ## Downloading and building
 ```
@@ -20,11 +22,14 @@ docker build -t dyndnsclient .
 
 # Example with docker run
 ```
-docker run -e USERNAME user \
-           -e PASSWORD pass \
-           -e SYSTEM default@dyndns.org \
+sudo docker run -t -i \
+           -e "USERNAME=user" \
+           -e="PASSWORD=pass" \
+           -e "SYSTEM=default@dyndns.org" \
+           -e "ALIAS=testdomain.info" \
            -v /etc/localtime:/etc/localtime:ro \
-           -v /home/rose/docker/ddns/config/:/config \
+           -v /data/docker/containers/dyndnsclient/config:/config \
+           --restart always
            dyndnsclient
 ```
 
@@ -37,10 +42,11 @@ services:
     container_name: dyndnsclient
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /home/rose/docker/ddns/config/:/config    
+      - /data/docker/containers/dyndnsclient/config:/config    
     environment:
       - USERNAME=user
       - PASSWORD=pass
       - SYSTEM=default@dyndns.org
+      - ALIAS=testdomain.info
     restart: always
 ```

@@ -1,14 +1,20 @@
 config_file=/config/inadyn.conf
 
-if [[ ! -f $config_file ]]; then
+appStart () {
+
+    inadyn --input_file $config_file
+
+}
+
+if [ ! -f $config_file ]; then
 
     echo "update_period_sec 600" > $config_file
     echo "username ${USERNAME}" >> $config_file
     echo "password ${PASSWORD}" >> $config_file
     
-    if [ -z "$system" ]; then
+    if [ -z "$SYSTEM" ]; then
 
-        echo "default@dyndns.org" >> $config_file
+        echo "system default@dyndns.org" >> $config_file
 
     else
 
@@ -16,8 +22,12 @@ if [[ ! -f $config_file ]]; then
 
     fi
 
+    echo "alias ${ALIAS}" >> $config_file
+
+    appStart
+
 else
 
-    inadyn --input_file $config_file
+    appStart
 
 fi
