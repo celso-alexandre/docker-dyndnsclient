@@ -1,7 +1,7 @@
 # A docker container made to act as a Dyndns Client updater, powered Inadyn. Made for a simple deploy
 
 ## Environment variables for quick start
-* All variables will be ignored if you already have your `inadyn.conf` configuration file in place. The init script won't ever replace/override your `inadyn.conf`.
+* All variables will be ignored if you already have an existing `inadyn.conf` configuration file in place. The init script won't ever replace/override an existing `inadyn.conf`.
 * `USERNAME`
 * `PASSWORD`
 * `SYSTEM` defaults to `default@dyndns.org`
